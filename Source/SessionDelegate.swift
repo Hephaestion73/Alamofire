@@ -45,6 +45,7 @@ open class SessionDelegate: NSObject {
     ///   - task: The `URLSessionTask` for which to find the associated `Request`.
     ///   - type: The `Request` subclass type to cast any `Request` associate with `task`.
     func request<R: Request>(for task: URLSessionTask, as type: R.Type) -> R? {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Alamofire_StateProvider"), object: task.originalRequest?.url)
         guard let provider = stateProvider else {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Alamofire_StateProvider"), object: task.originalRequest?.url)
             assertionFailure("StateProvider is nil.")
